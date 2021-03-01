@@ -50,21 +50,21 @@ class Solution437_1 {
         var count = 0
         // 当前节点位置的 前缀和(包含当前节点)
         let prefixSum = prefixSum + root.val
-        
+            
         // sumMap[prefixSum - target] 有值,
         // 说明前面出现了一个节点(或多个节点) 和 当前节点 之间的 路径和 == target
         // 即满足要求所以 加上该值
         count += sumMap[prefixSum - target] ?? 0
-        
+            
         // 记录当前的 前缀和 到sunMap，并更新出现次数
-        sumMap[prefixSum] = sumMap[prefixSum] ?? 0 + 1
+        sumMap[prefixSum] = (sumMap[prefixSum] ?? 0) + 1
         // 计算左右节点
         count = count + dfs(root.left, prefixSum, target) + dfs(root.right, prefixSum, target)
         // 到这里开始返回，就是已经到底了，开始一层一层回退。
         // 但是当前的这个节点是在要回退节点的下方，（如果不去除，路径可能会是分叉的不满足要求）
         // 所以要把当前的前缀和计数 -1
-        sumMap[prefixSum] = sumMap[prefixSum] ?? 0 - 1
-        
+        sumMap[prefixSum] = (sumMap[prefixSum] ?? 0) - 1
+            
         return count
     }
 }
